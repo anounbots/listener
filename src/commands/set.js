@@ -8,7 +8,7 @@ exports.run = (list, msg, args, logger) => {
     if (feature === 'prefix') {
         sql.get(`SELECT * FROM guilds WHERE guildID ='${msg.guild.id}'`).then(guild => {
         if (!guild) {
-            sql.run('INSERT INTO guilds (guildID, prefix, ownerID) VALUES (?, ?, ?)', [msg.guild.id, 'l!', msg.guild.owner.id])
+            sql.run('INSERT INTO guilds (guildID, prefix, ownerID) VALUES (?, ?, ?)', [msg.guild.id, 'tl', msg.guild.owner.id])
             msg.channel.send('**Inserting this guild into the database!**')
             msg.delete(1500)
         } else {
