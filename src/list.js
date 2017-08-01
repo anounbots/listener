@@ -8,7 +8,7 @@ const sql = require('sqlite');
 sql.open(dbPath);
 
 list.on('ready', () => {
-    list.user.setGame(`l!help | ${list.guilds.size} servers!`)
+    list.user.setGame(`tlhelp | ${list.guilds.size} servers!`)
     logger.info('3')
     logger.info('2')
     logger.info('1')
@@ -18,7 +18,7 @@ list.on('ready', () => {
 list.on('message', async(msg) => {
     sql.get(`SELECT * FROM guilds WHERE guildID ='${msg.guild.id}'`).then(guild => {
         if (!guild) {
-            sql.run('INSERT INTO guilds (guildID, prefix, ownerID) VALUES (?, ?, ?)', [msg.guild.id, 't!', msg.guild.owner.id])
+            sql.run('INSERT INTO guilds (guildID, prefix, ownerID) VALUES (?, ?, ?)', [msg.guild.id, 'tl', msg.guild.owner.id])
         } else {
             if (msg.author.bot) return;
             if (!msg.content.startsWith(guild.prefix)) return;
@@ -37,7 +37,7 @@ list.on('message', async(msg) => {
     }).catch(() => {
         logger.error();
         sql.run("CREATE TABLE IF NOT EXISTS guilds (guildID TEXT, prefix TEXT, ownerID TEXT)").then(() => {
-            sql.run('INSERT INTO guilds (guildID, prefix, ownerID) VALUES (?, ?, ?)', [msg.guild.id, 't!', msg.guild.owner.id])
+            sql.run('INSERT INTO guilds (guildID, prefix, ownerID) VALUES (?, ?, ?)', [msg.guild.id, 'tl', msg.guild.owner.id])
         });
     });
 });
