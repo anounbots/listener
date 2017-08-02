@@ -6,6 +6,8 @@
   "dependencies": {
     "chalk": "^2.0.1",
     "discord.js": "^11.1.0",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
     "sqlite": "^2.8.0"
   },
   "devDependencies": {},
