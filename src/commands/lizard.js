@@ -2,12 +2,12 @@ const snekfetch = require('snekfetch');
 exports.run = (list, msg, args, logger) => {
     list.stats.lizard++;
     list.db(list.stats);
-snekfetch.get('https://nekos.life/api/lizard')
+    snekfetch.get('https://nekos.life/api/lizard')
         .then(r => msg.channel.send({
             embed: {
-                color: c
+                color: 0x008000,
                 author: {
-                    name: "Beautiful Lizard! \\o/",
+                    name: 'Beautiful Lizard! \\o/',
                     icon_url: list.user.avatarURL
                 },
                 image: {
@@ -15,3 +15,4 @@ snekfetch.get('https://nekos.life/api/lizard')
                 }
             }
         }).catch(e => logger.warn(e)));
+};
