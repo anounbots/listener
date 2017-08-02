@@ -16,6 +16,39 @@ list.on('ready', () => {
     logger.info(`Listener is ready on ${list.guilds.size} servers with ${list.users.size} users!`);
 });
 
+
+list.commands = new Discord.Collection();
+list.aliases = new Discord.Collection();
+fs.readdir('./commands/', (err, files) => {
+  if (err) console.error(err);
+  files.forEach(f => {
+    let props = require(`./commands/${f}`);
+    list.commands.set(props.help.name, props);
+    props.conf.aliases.forEach(alias => {
+      list.aliases.set(alias, props.help.name);
+    })
+  });
+});
+
+list.reload = command => {
+  return new Promise((resolve, reject) => {
+    try {
+      delete require.cache[require.resolve(`./commands/${command}`)];
+      let cmd = require(`./commands/${command}`);
+      list.commands.delete(command);
+      list.aliases.forEach((cmd, alias) => {
+        if (cmd === command) client.aliases.delete(alias);
+      });
+      list.commands.set(command, cmd);
+      cmd.conf.aliases.forEach(alias => {
+        list.aliases.set(alias, cmd.help.name);
+      });
+      resolve();
+    } catch (e){
+      reject(e);
+    }
+  });
+};
 list.on('message', async(msg) => {
     sql.get(`SELECT * FROM guilds WHERE guildID ='${msg.guild.id}'`).then(guild => {
         if (!guild) {
@@ -26,7 +59,14 @@ list.on('message', async(msg) => {
 
             const args = msg.content.split(' ');
             const command = args.shift().slice(guild.prefix.length);
-
+            
+            let cmd;
+            if (list.commands.has(command)) {
+              cmd = list.commands.get(command);
+            } else if (list.aliases.has(command)) {
+              cmd = list.commands.get(list.aliases.get(command));
+            }
+            if (cmd) {
             try {
                 let commandFile = require(`./commands/${command}.js`);
                 commandFile.run(list, msg, args, logger);
@@ -35,6 +75,7 @@ list.on('message', async(msg) => {
                 logger.error(err);
                 msg.channel.send({ embed: { color: config.embedColor, title: err.stack.split('\n')[0], description: err.message + '\n' + err.stack.split('\n')[1] + '\n Please, go over to: so AnounFX™#3494 can fix error' } });
             }
+          }
         }
     }).catch(() => {
         logger.error();
