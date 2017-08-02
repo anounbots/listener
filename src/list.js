@@ -6,6 +6,7 @@ const path = require('path');
 const dbPath = path.resolve(__dirname, '..', 'database', 'db.sqlite');
 const sql = require('sqlite');
 sql.open(dbPath);
+require("./util/utils.js")(list);
 
 list.on('ready', () => {
     list.user.setGame(`tlhelp | ${list.guilds.size} servers!`);
