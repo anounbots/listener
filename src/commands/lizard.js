@@ -16,3 +16,15 @@ exports.run = (list, msg, args, logger) => {
             }
         }).catch(e => logger.warn(e)));
 };
+
+exports.conf = {
+  enabled: true, 
+  guildOnly: false,
+  aliases: ['li']
+  };
+
+  exports.help = {
+  name: 'lizard',
+  description: 'sends a random lizard from https://nekos.life',
+  usage: '<prefix>lizard'
+  };
