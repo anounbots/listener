@@ -28,7 +28,7 @@ exports.run = (list, msg, args, logger) => {
     } else if (feature === 'nsfw') {
         if (!msg.channel.permissionsFor(list.user).has('MANAGE_CHANNELS')) {
             return msg.reply('I do not have permission to set this channel to nsfw \\:(\nPlease give me the "MANAGE_CHANNELS" Permission');
-        }
+        
         sql.get(`SELECT * FROM guilds WHERE guildID = '${msg.guild.id}'`).then(guild => {
             if (!guild) {
                 if (!msg.channel.nsfw) {
@@ -54,3 +54,15 @@ exports.run = (list, msg, args, logger) => {
         });
     }
 };
+
+exports.conf = {
+  enabled: true, 
+  guildOnly: false,
+  aliases: ['configure']
+  };
+
+  exports.help = {
+  name: 'set',
+  description: 'changing a guild setting',
+  usage: '<prefix>set <feature> <to>'
+  };
