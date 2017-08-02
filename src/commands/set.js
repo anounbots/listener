@@ -3,6 +3,8 @@ const dbPath = path.resolve(__dirname, '..', 'database', 'db.sqlite');
 const sql = require('sqlite');
 sql.open(dbPath);
 exports.run = (list, msg, args, logger) => {
+    list.stats.set++;
+    list.db(list.stats);
     let feature = args[0];
     let to = args.slice(1).join(' ');
     if (feature === 'prefix') {
