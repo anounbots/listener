@@ -1,7 +1,7 @@
 const sql = require('sqlite');
 sql.open('../database/db.sqlite');
 exports.run = (list, msg, args, logger) => {
-    if (!msg.member.permissions.has('ADMINISTRATOR')) {
+    if (!msg.member.permissions.has('MANAGE_GUILD')) {
         return msg.reply('you do not have permission to change the configs');
     }
     list.stats.set++;
