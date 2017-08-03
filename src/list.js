@@ -3,11 +3,9 @@ const list = new Client();
 const Discord = require('discord.js');
 const logger = require('./util/Logger.js');
 const config = require('./config/config.json');
-const path = require('path');
-const dbPath = path.resolve(__dirname, '..', 'database', 'db.sqlite');
 const sql = require('sqlite');
 const fs = require('fs');
-sql.open(dbPath);
+sql.open('./database/db.sqlite');
 require('./util/utils.js')(list);
 
 list.on('ready', () => {
@@ -69,14 +67,7 @@ list.on('message', async(msg) => {
                 cmd = list.commands.get(list.aliases.get(command));
             }
             if (cmd) {
-                try {
-                    let commandFile = require(`./commands/${command}.js`);
-                    commandFile.run(list, msg, args, logger);
-                } catch (err) {
-                    if (err.stack.startsWith('Error: Cannot find module')) return;
-                    logger.error(err);
-                    msg.channel.send({ embed: { color: config.embedColor, title: err.stack.split('\n')[0], description: err.message + '\n' + err.stack.split('\n')[1] + '\n Please, go over to: so AnounFX™#3494 can fix error' } });
-                }
+                cmd.run(list, msg, args);
             }
         }
     }).catch(() => {

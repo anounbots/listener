@@ -1,8 +1,9 @@
-const path = require('path');
-const dbPath = path.resolve(__dirname, '..', 'database', 'db.sqlite');
 const sql = require('sqlite');
-sql.open(dbPath);
+sql.open('../database/db.sqlite');
 exports.run = (list, msg, args, logger) => {
+    if (!msg.member.permissions.has('ADMINISTRATOR')) {
+        return msg.reply('you do not have permission to change the configs');
+    }
     list.stats.set++;
     list.db(list.stats);
     let feature = args[0];
@@ -41,7 +42,7 @@ exports.run = (list, msg, args, logger) => {
                 }
             } else {
                 if (!msg.channel.nsfw) msg.channel.edit({ nsfw: true });
-                sql.run(`UPDATE guilds SET nsfwID = '${msg.channel.id} WHERE guildID ='${msg.guild.id}`);
+                sql.run(`UPDATE guilds SET nsfwID = '${msg.channel.id}' WHERE guildID ='${msg.guild.id}'`);
                 msg.reply(':white_check_mark: You have successfully set this channel to nsfw!');
             }
         }).catch(() => {
@@ -63,6 +64,6 @@ exports.conf = {
 
 exports.help = {
     name: 'set',
-    description: 'changing a guild setting',
+    description: 'changes a guild setting',
     usage: '<prefix>set <feature> <to>'
 };
