@@ -40,6 +40,7 @@ exports.run = (list, msg, args, logger) => {
                     sql.run('INSERT INTO guilds (guildID, prefix, ownerID, nsfwID) VALUES(?, ?, ?, ?)', [msg.guild.id, 'tl', msg.guild.owner.id, msg.channel.id]);
                     msg.reply(':white_check_mark: Success! You have set this channel to NSFW');
                     if (to === 'disable') {
+                        msg.channel.edit({ nsfw: false });
                         sql.run('INSERT INTO guilds (guildID, prefix, ownerID, nsfwID) VALUES(?, ?, ?, ?)', [msg.guild.id, 'tl', msg.guild.owner.id, null]);
                         msg.reply(':white_check_mark: Success! You have set this channel to not be NSFW');
                     }
