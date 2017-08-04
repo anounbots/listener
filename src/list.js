@@ -1,5 +1,11 @@
 const { Client } = require('discord.js');
-const list = new Client();
+const list = new Client({
+    disableEveryone: true,
+    disabledEvents: [
+      "FRIEND_ADD",
+      "FRIEND_REMOVE"
+    ]
+});
 const Discord = require('discord.js');
 const logger = require('./util/Logger.js');
 const config = require('./config/config.json');
