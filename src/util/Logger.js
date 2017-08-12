@@ -29,4 +29,9 @@ class Logger {
         return console.log(`${chalk.bgRed('[ERROR]')} ${chalk.red(message)}`);
     }
 }
+
 module.exports = Logger;
+
+/*
+Credits to: https://github.com/augubots/YumiBot/blob/master/src/Logger/Logger.js
+*/
