@@ -1,12 +1,11 @@
-const { Client } = require('discord.js');
+const { Client, Collection } = require('discord.js');
 const list = new Client({
     disableEveryone: true,
     disabledEvents: [
-      "FRIEND_ADD",
-      "FRIEND_REMOVE"
+        'FRIEND_ADD',
+        'FRIEND_REMOVE'
     ]
 });
-const Discord = require('discord.js');
 const logger = require('./util/Logger.js');
 const config = require('./config/config.json');
 const sql = require('sqlite');
@@ -23,8 +22,8 @@ list.on('ready', () => {
 });
 
 
-list.commands = new Discord.Collection();
-list.aliases = new Discord.Collection();
+list.commands = new Collection();
+list.aliases = new Collection();
 fs.readdir('./commands/', (err, files) => {
     if (err) console.error(err);
     files.forEach(f => {
