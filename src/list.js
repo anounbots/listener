@@ -16,7 +16,7 @@ sql.open('./database/db.sqlite');
 require('./util/utils.js')(list);
 
 list.on('ready', () => {
-    list.user.setGame(`tlhelp | ${list.guilds.size} servers!`);
+    list.user.setPresence({ game: { name: `tlhelp | ${list.guilds.size} servers!`, type: 0 } });
     logger.info('3');
     logger.info('2');
     logger.info('1');
