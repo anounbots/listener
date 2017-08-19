@@ -3,8 +3,10 @@ const list = new Client({
     disableEveryone: true,
     disabledEvents: [
         'FRIEND_ADD',
-        'FRIEND_REMOVE'
-    ]
+        'FRIEND_REMOVE',
+        'TYPING_START'
+    ],
+    autoReconnect: true
 });
 const logger = require('./util/Logger.js');
 const config = require('./config/config.json');
