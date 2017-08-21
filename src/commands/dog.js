@@ -8,7 +8,7 @@ exports.run = (list, msg, args, logger) => {
       .end((error, response) => {
         if (error) {
           logger.warn(error);
-          return msg.channel.send('Something went wrong...');
+          return msg.channel.send(`:x: | An error has occured!\`\`\`${error}\`\`\``);
         }
         return msg.channel.send({
           embed: {
