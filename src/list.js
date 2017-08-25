@@ -26,6 +26,7 @@ list.on('ready', () => {
 
 list.commands = new Collection();
 list.aliases = new Collection();
+list.config = config;
 fs.readdir('./commands/', (err, files) => {
     if (err) console.error(err);
     files.forEach(f => {
@@ -40,8 +41,8 @@ fs.readdir('./commands/', (err, files) => {
 list.reload = command => {
     return new Promise((resolve, reject) => {
         try {
-            delete require.cache[require.resolve(`./commands/${command}`)];
-            let cmd = require(`./commands/${command}`);
+            delete require.cache[require.resolve(`./commands/${command}.js`)];
+            let cmd = require(`./commands/${command}.js`);
             list.commands.delete(command);
             list.aliases.forEach((cmd, alias) => {
                 if (cmd === command) list.aliases.delete(alias);

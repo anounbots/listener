@@ -8,7 +8,7 @@ function clean(text) {
 }
 
 exports.run = (list, msg, args) => {
-    if (msg.author.id !== 'id') return;
+    if (!list.config.devs.includes(msg.author.id)) return;
     args = args.join(' ');
     try {
         let evaled = eval(args);

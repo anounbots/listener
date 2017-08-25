@@ -2,5 +2,9 @@
     "tokens": {
         "discord": "token pls"
     },
-    "embedColor": "DDDDDD"
+    "embedColor": "DDDDDD",
+    "devs": [
+        "231085410988589056",
+        "312238004653785088"
+    ]
 }
